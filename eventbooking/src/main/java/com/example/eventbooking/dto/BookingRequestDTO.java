@@ -17,7 +17,6 @@ public class BookingRequestDTO {
     @Positive(message = "Number of tickets must be greater than 0")
     private Integer numberOfTickets;
 
-    // Getters and Setters
 
     public Long getUserId() {
         return userId;
@@ -27,6 +26,7 @@ public class BookingRequestDTO {
         this.userId = userId;
     }
 
+
     public Long getEventId() {
         return eventId;
     }
@@ -34,6 +34,7 @@ public class BookingRequestDTO {
     public void setEventId(Long eventId) {
         this.eventId = eventId;
     }
+
 
     public Integer getNumberOfTickets() {
         return numberOfTickets;

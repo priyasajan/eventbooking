@@ -42,7 +42,6 @@ public class CategoryService {
         return mapToResponseDTO(savedCategory);
     }
 
-
     // GET ALL CATEGORIES
 
     public List<CategoryResponseDTO> getAllCategories(int page, int size) {
@@ -73,6 +72,7 @@ public class CategoryService {
 
         return mapToResponseDTO(category);
     }
+
 
 
     // UPDATE CATEGORY
@@ -130,4 +130,5 @@ public class CategoryService {
 
         return response;
     }
+
 }

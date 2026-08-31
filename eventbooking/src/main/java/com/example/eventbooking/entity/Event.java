@@ -1,27 +1,38 @@
 package com.example.eventbooking.entity;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 import jakarta.persistence.*;
+
 @Entity
-@Table(name="events")
+@Table(name = "events")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Event {
+
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String eventName;
     private String description;
     private String venue;
     private Double ticketPrice;
+
     private Integer totalSeats;
-    private Integer totalSeatsAvailable;
+    private LocalDate eventDate;
+    private LocalTime eventTime;
 
+    private Integer availableSeats;
 
+    @ManyToOne
+    @JoinColumn(name = "organizer_id")
+    private User organizer;
 }

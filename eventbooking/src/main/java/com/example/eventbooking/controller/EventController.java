@@ -3,56 +3,92 @@ package com.example.eventbooking.controller;
 import com.example.eventbooking.dto.EventRequestDTO;
 import com.example.eventbooking.dto.EventResponseDTO;
 import com.example.eventbooking.service.EventService;
+
 import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping ("api/events")
+@RequestMapping("/api/events")
 public class EventController {
+
     @Autowired
     private EventService eventService;
 
+
+    // CREATE
     @PostMapping
-    public EventResponseDTO saveEvent(
+    public ResponseEntity<EventResponseDTO> saveEvent(
             @Valid @RequestBody EventRequestDTO request) {
 
-        return eventService.saveEvent(request);
+        EventResponseDTO response =
+                eventService.saveEvent(request);
+
+        return ResponseEntity.ok(response);
     }
+
+
+    // GET ALL
     @GetMapping
-    public List<EventResponseDTO> getAllEvents(
+    public ResponseEntity<List<EventResponseDTO>> getAllEvents(
             @RequestParam int page,
-            @RequestParam int size
-    ){
-        return eventService.getAllEvents(page, size);
+            @RequestParam int size) {
+
+        List<EventResponseDTO> events =
+                eventService.getAllEvents(page, size);
+
+        return ResponseEntity.ok(events);
     }
+
+
+    // GET BY ID
     @GetMapping("/{id}")
-    public EventResponseDTO getEventById(@PathVariable Long id) {
-        return eventService.getEventById(id);
+    public ResponseEntity<EventResponseDTO> getEventById(
+            @PathVariable Long id) {
+
+        EventResponseDTO event =
+                eventService.getEventById(id);
+
+        return ResponseEntity.ok(event);
     }
+
+
+    // SEARCH
     @GetMapping("/search")
-    public List<EventResponseDTO> searchEvents(
+    public ResponseEntity<List<EventResponseDTO>> searchEvents(
             @RequestParam String eventName) {
 
-        return eventService.searchEvents(eventName);
+        List<EventResponseDTO> events =
+                eventService.searchEvents(eventName);
+
+        return ResponseEntity.ok(events);
     }
+
+
+    // UPDATE
     @PutMapping("/{id}")
-    public EventResponseDTO updateEvent(
+    public ResponseEntity<EventResponseDTO> updateEvent(
             @PathVariable Long id,
-            @Valid @RequestBody EventRequestDTO request
+            @Valid @RequestBody EventRequestDTO request) {
 
-    ) {
+        EventResponseDTO updatedEvent =
+                eventService.updateEvent(id, request);
 
-        return eventService.updateEvent(id, request);
+        return ResponseEntity.ok(updatedEvent);
     }
+
+
+    // DELETE
     @DeleteMapping("/{id}")
-    public void deleteEvent(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteEvent(
+            @PathVariable Long id) {
+
         eventService.deleteEvent(id);
 
-
+        return ResponseEntity.noContent().build();
     }
-
 }
-

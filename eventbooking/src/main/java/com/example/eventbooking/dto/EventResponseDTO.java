@@ -1,4 +1,7 @@
 package com.example.eventbooking.dto;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 
 import lombok.AllArgsConstructor;
@@ -15,4 +18,6 @@ public class EventResponseDTO {
     private String venue;
     private Double ticketPrice;
     private Integer totalSeats;
+    private LocalDate eventDate;
+    private LocalTime eventTime;
 }

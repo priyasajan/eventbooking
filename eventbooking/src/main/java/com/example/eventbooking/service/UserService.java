@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,9 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     // CREATE USER
 
@@ -29,7 +34,9 @@ public class UserService {
 
         // Check whether email already exists
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new UserAlreadyExistsException("User already exists with this email");
+            throw new UserAlreadyExistsException(
+                    "User already exists with this email"
+            );
         }
 
         // Convert RequestDTO -> Entity
@@ -73,10 +80,12 @@ public class UserService {
     public UserResponseDTO getUserById(Long id) {
 
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() ->
+                        new UserNotFoundException("User not found"));
 
         return mapToResponseDTO(user);
     }
+
 
     // UPDATE USER
 
@@ -84,13 +93,18 @@ public class UserService {
 
         // Check whether user exists
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() ->
+                        new UserNotFoundException("User not found"));
 
         // Update user details
         user.setName(request.getName());
         user.setEmail(request.getEmail());
         user.setPhone(request.getPhone());
-        user.setPassword(request.getPassword());
+
+        // Hash password before saving
+        user.setPassword(
+                passwordEncoder.encode(request.getPassword())
+        );
 
         // Save updated user
         User updatedUser = userRepository.save(user);
@@ -99,13 +113,16 @@ public class UserService {
         return mapToResponseDTO(updatedUser);
     }
 
-    // DELETE USER
 
+    // DELETE USER
 
     public void deleteUser(Long id) {
 
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User not found with id : " + id));
+                .orElseThrow(() ->
+                        new UserNotFoundException(
+                                "User not found with id : " + id
+                        ));
 
         userRepository.delete(user);
     }
@@ -120,7 +137,11 @@ public class UserService {
         user.setName(request.getName());
         user.setEmail(request.getEmail());
         user.setPhone(request.getPhone());
-        user.setPassword(request.getPassword());
+
+        // Hash password before storing
+        user.setPassword(
+                passwordEncoder.encode(request.getPassword())
+        );
 
         // Default role for every new user
         user.setRole(Role.USER);
@@ -128,8 +149,8 @@ public class UserService {
         return user;
     }
 
-    // ENTITY -> RESPONSE DTO
 
+    // ENTITY -> RESPONSE DTO
 
     private UserResponseDTO mapToResponseDTO(User user) {
 
