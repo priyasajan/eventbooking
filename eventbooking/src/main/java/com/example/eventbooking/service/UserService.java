@@ -7,13 +7,13 @@ import com.example.eventbooking.entity.User;
 import com.example.eventbooking.exception.UserAlreadyExistsException;
 import com.example.eventbooking.exception.UserNotFoundException;
 import com.example.eventbooking.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
 
-    // CREATE USER
+  // create user
 
     public UserResponseDTO saveUser(UserRequestDTO request) {
 
@@ -50,7 +50,7 @@ public class UserService {
     }
 
 
-    // GET ALL USERS
+  // get all users
 
     public List<UserResponseDTO> getAllUsers(int page, int size) {
 
@@ -75,7 +75,7 @@ public class UserService {
     }
 
 
-    // GET USER BY ID
+//get user by id
 
     public UserResponseDTO getUserById(Long id) {
 
@@ -86,8 +86,18 @@ public class UserService {
         return mapToResponseDTO(user);
     }
 
+//get user by email
 
-    // UPDATE USER
+    public UserResponseDTO getUserByEmail(String email) {
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new UserNotFoundException("User not found"));
+
+        return mapToResponseDTO(user);
+    }
+
+// update user
 
     public UserResponseDTO updateUser(Long id, UserRequestDTO request) {
 
@@ -114,7 +124,7 @@ public class UserService {
     }
 
 
-    // DELETE USER
+  // delete user
 
     public void deleteUser(Long id) {
 
@@ -128,7 +138,7 @@ public class UserService {
     }
 
 
-    // REQUEST DTO -> ENTITY
+  // requestDto-> entity
 
     private User mapToEntity(UserRequestDTO request) {
 
@@ -150,7 +160,7 @@ public class UserService {
     }
 
 
-    // ENTITY -> RESPONSE DTO
+    //entity responsedto
 
     private UserResponseDTO mapToResponseDTO(User user) {
 

@@ -31,9 +31,8 @@ public class EventService {
     private UserRepository userRepository;
 
 
-    // =========================
-    // CREATE EVENT
-    // =========================
+
+    //  create event
     public EventResponseDTO saveEvent(EventRequestDTO request) {
 
         if (eventRepository.existsByEventNameAndVenue(
@@ -66,9 +65,7 @@ public class EventService {
     }
 
 
-    // =========================
-    // GET ALL EVENTS
-    // =========================
+   //get all events
     public List<EventResponseDTO> getAllEvents(int page, int size) {
 
         Pageable pageable = PageRequest.of(page, size);
@@ -89,9 +86,7 @@ public class EventService {
     }
 
 
-    // =========================
-    // GET EVENT BY ID
-    // =========================
+    //get event by id
     public EventResponseDTO getEventById(Long id) {
 
         Event event = eventRepository.findById(id)
@@ -103,9 +98,7 @@ public class EventService {
     }
 
 
-    // =========================
-    // UPDATE EVENT
-    // =========================
+    //update event
     public EventResponseDTO updateEvent(
             Long id,
             EventRequestDTO request) {
@@ -151,11 +144,9 @@ public class EventService {
         return mapToResponseDTO(updatedEvent);
     }
 
-
-    // =========================
-    // DELETE EVENT
-    // =========================
+//delete
     public void deleteEvent(Long id) {
+
 
         Event event = eventRepository.findById(id)
                 .orElseThrow(() ->
@@ -190,9 +181,7 @@ public class EventService {
     }
 
 
-    // =========================
-    // SEARCH EVENTS
-    // =========================
+    //search events
     public List<EventResponseDTO> searchEvents(
             String eventName) {
 
@@ -211,10 +200,7 @@ public class EventService {
         return responseList;
     }
 
-
-    // =========================
-    // GET LOGGED-IN USER
-    // =========================
+//get logged in user
     private User getLoggedInUser() {
 
         Authentication authentication =
@@ -229,9 +215,7 @@ public class EventService {
     }
 
 
-    // =========================
-    // UPDATE EVENT DETAILS
-    // =========================
+   //update event details
     private void updateEventDetails(
             Event event,
             EventRequestDTO request) {
@@ -243,10 +227,7 @@ public class EventService {
         event.setTotalSeats(request.getTotalSeats());
     }
 
-
-    // =========================
-    // ENTITY -> RESPONSE DTO
-    // =========================
+// entity -> response dto
     private EventResponseDTO mapToResponseDTO(
             Event event) {
 
@@ -267,9 +248,7 @@ public class EventService {
     }
 
 
-    // =========================
-    // REQUEST DTO -> ENTITY
-    // =========================
+    //request dto -> entity
     private Event mapToEntity(
             EventRequestDTO request) {
 

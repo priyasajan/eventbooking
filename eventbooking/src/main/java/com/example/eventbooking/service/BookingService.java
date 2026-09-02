@@ -36,9 +36,7 @@ public class BookingService {
     private EventRepository eventRepository;
 
 
-    // =========================
-    // CREATE BOOKING
-    // =========================
+   // create booking
 
     @Transactional
     public BookingResponseDTO saveBooking(BookingRequestDTO request) {
@@ -111,9 +109,7 @@ public class BookingService {
     }
 
 
-    // =========================
-    // GET BOOKING BY ID
-    // =========================
+    //get booking by id
 
     public BookingResponseDTO getBookingById(Long id) {
 
@@ -127,9 +123,7 @@ public class BookingService {
     }
 
 
-    // =========================
-    // GET BOOKINGS BASED ON ROLE
-    // =========================
+  //get booking based on role
 
     public List<BookingResponseDTO> getAllBookings() {
 
@@ -150,9 +144,7 @@ public class BookingService {
         List<Booking> bookings;
 
 
-        // =========================
-        // ADMIN
-        // =========================
+     //admin
 
         if (loggedInUser.getRole() == Role.ADMIN) {
 
@@ -161,9 +153,7 @@ public class BookingService {
         }
 
 
-        // =========================
-        // ORGANIZER
-        // =========================
+       //organizer
 
         else if (loggedInUser.getRole() == Role.ORGANIZER) {
 
@@ -175,9 +165,7 @@ public class BookingService {
         }
 
 
-        // =========================
-        // USER
-        // =========================
+      //user
 
         else {
 
@@ -203,9 +191,7 @@ public class BookingService {
     }
 
 
-    // =========================
-    // CANCEL BOOKING
-    // =========================
+  //cancel bookings
 
     @Transactional
     public BookingResponseDTO cancelBooking(Long id) {
@@ -234,9 +220,7 @@ public class BookingService {
                         ));
 
 
-        // =========================
-        // ORGANIZER
-        // =========================
+        //organizer
 
         if (loggedInUser.getRole() == Role.ORGANIZER) {
 
@@ -245,10 +229,7 @@ public class BookingService {
             );
         }
 
-
-        // =========================
-        // USER
-        // =========================
+//user
 
         if (loggedInUser.getRole() == Role.USER) {
 
@@ -263,9 +244,7 @@ public class BookingService {
         }
 
 
-        // =========================
-        // ADMIN
-        // =========================
+    //admin
 
         // ADMIN can cancel any booking
 
@@ -310,9 +289,8 @@ public class BookingService {
     }
 
 
-    // =========================
+
     // ENTITY -> RESPONSE DTO
-    // =========================
 
     private BookingResponseDTO mapToResponseDTO(
             Booking booking) {

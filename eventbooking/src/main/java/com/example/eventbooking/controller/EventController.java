@@ -1,8 +1,12 @@
-package com.example.eventbooking.controller;
+
+        package com.example.eventbooking.controller;
 
 import com.example.eventbooking.dto.EventRequestDTO;
 import com.example.eventbooking.dto.EventResponseDTO;
 import com.example.eventbooking.service.EventService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import jakarta.validation.Valid;
 
@@ -12,15 +16,23 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/api/events")
 public class EventController {
+
 
     @Autowired
     private EventService eventService;
 
 
-    // CREATE
+   //create event oraganizer nu admin mathrame access ullu
+
+    @Operation(
+            summary = "Create a new event",
+            description = "Organizer and Admin can create new events.",
+            tags = {"Organizer", "Admin"}
+    )
     @PostMapping
     public ResponseEntity<EventResponseDTO> saveEvent(
             @Valid @RequestBody EventRequestDTO request) {
@@ -32,7 +44,13 @@ public class EventController {
     }
 
 
-    // GET ALL
+    // get all events user ,admin, organizer access und
+
+    @Operation(
+            summary = "Get all events",
+            description = "View all available events.",
+            tags = {"User", "Organizer", "Admin"}
+    )
     @GetMapping
     public ResponseEntity<List<EventResponseDTO>> getAllEvents(
             @RequestParam int page,
@@ -45,7 +63,13 @@ public class EventController {
     }
 
 
-    // GET BY ID
+   //get event by id
+
+    @Operation(
+            summary = "Get event by ID",
+            description = "View details of a specific event.",
+            tags = {"User", "Organizer", "Admin"}
+    )
     @GetMapping("/{id}")
     public ResponseEntity<EventResponseDTO> getEventById(
             @PathVariable Long id) {
@@ -57,7 +81,13 @@ public class EventController {
     }
 
 
-    // SEARCH
+   //search events
+
+    @Operation(
+            summary = "Search events by name",
+            description = "Search available events using event name.",
+            tags = {"User", "Organizer", "Admin"}
+    )
     @GetMapping("/search")
     public ResponseEntity<List<EventResponseDTO>> searchEvents(
             @RequestParam String eventName) {
@@ -68,8 +98,13 @@ public class EventController {
         return ResponseEntity.ok(events);
     }
 
+//update events
 
-    // UPDATE
+    @Operation(
+            summary = "Update an event",
+            description = "Organizer and Admin can update events.",
+            tags = {"Organizer", "Admin"}
+    )
     @PutMapping("/{id}")
     public ResponseEntity<EventResponseDTO> updateEvent(
             @PathVariable Long id,
@@ -82,7 +117,13 @@ public class EventController {
     }
 
 
-    // DELETE
+ //delete
+
+    @Operation(
+            summary = "Delete an event",
+            description = "Organizer and Admin can delete events.",
+            tags = {"Organizer", "Admin"}
+    )
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEvent(
             @PathVariable Long id) {

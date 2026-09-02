@@ -24,9 +24,7 @@ public class JwtService {
     }
 
 
-    // =========================
-    // GENERATE JWT TOKEN
-    // =========================
+  //generate jwt token
 
     public String generateToken(
             String email,
@@ -40,9 +38,7 @@ public class JwtService {
     }
 
 
-    // =========================
-    // VALIDATE JWT TOKEN
-    // =========================
+   // vailidate jwt token
 
     public boolean isTokenValid(
             String token) {
@@ -63,9 +59,7 @@ public class JwtService {
     }
 
 
-    // =========================
-    // EXTRACT EMAIL
-    // =========================
+ //mail
 
     public String extractEmail(
             String token) {
@@ -79,9 +73,7 @@ public class JwtService {
     }
 
 
-    // =========================
-    // EXTRACT ROLE
-    // =========================
+//role
 
     public String extractRole(
             String token) {
